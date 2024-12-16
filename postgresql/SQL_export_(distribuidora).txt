@@ -1,0 +1,57 @@
+
+
+CREATE TABLE fabricante (
+id_fabricante INTEGER PRIMARY KEY NOT NULL,
+nome VARCHAR(255) NOT NULL,
+cidade VARCHAR(50) NOT NULL,
+telefone VARCHAR(15) NOT NULL);
+
+CREATE TABLE produto (
+id_produto INTEGER PRIMARY KEY NOT NULL,
+nome VARCHAR(255) NOT NULL,
+peso VARCHAR(10) NOT NULL,
+medida VARCHAR(15) NOT NULL,
+preco DOUBLE PRECISION NOT NULL,
+quant_estoque INTEGER NOT NULL,
+id_tipo_produto INTEGER NOT NULL,
+id_fabricante INTEGER NOT NULL);
+
+CREATE TABLE tipo_produto (
+id_tipo_produto INTEGER PRIMARY KEY NOT NULL,
+nome VARCHAR(255) NOT NULL);
+
+CREATE TABLE item_nota (
+id_nota_fiscal INTEGER NOT NULL,
+id_produto INTEGER NOT NULL,
+quantidade INTEGER NOT NULL,
+valor_unitario DOUBLE PRECISION NOT NULL);
+
+CREATE TABLE nota_fiscal (
+id_nota_fiscal INTEGER PRIMARY KEY NOT NULL,
+id_transportadora INTEGER NOT NULL,
+id_funcionario INTEGER NOT NULL,
+valor_frete DOUBLE PRECISION NOT NULL);
+
+CREATE TABLE funcionario (
+id_funcionario INTEGER PRIMARY KEY NOT NULL,
+id_cargo INTEGER NOT NULL,
+nome VARCHAR(255) NOT NULL,
+cidade VARCHAR(20) NOT NULL,
+ano_contratacao INTEGER NOT NULL);
+
+CREATE TABLE cargo (
+id_cargo INTEGER PRIMARY KEY NOT NULL,
+nome VARCHAR(50) NOT NULL,
+salario_base DOUBLE PRECISION NOT NULL);
+
+CREATE TABLE transportadora (
+id_transportadora INTEGER PRIMARY KEY NOT NULL,
+nome VARCHAR(255) NOT NULL);
+
+ALTER TABLE produto ADD CONSTRAINT produto_id_tipo_produto_tipo_produto_id_tipo_produto FOREIGN KEY (id_tipo_produto) REFERENCES tipo_produto(id_tipo_produto);
+ALTER TABLE produto ADD CONSTRAINT produto_id_fabricante_fabricante_id_fabricante FOREIGN KEY (id_fabricante) REFERENCES fabricante(id_fabricante);
+ALTER TABLE item_nota ADD CONSTRAINT item_nota_id_nota_fiscal_nota_fiscal_id_nota_fiscal FOREIGN KEY (id_nota_fiscal) REFERENCES nota_fiscal(id_nota_fiscal);
+ALTER TABLE item_nota ADD CONSTRAINT item_nota_id_produto_produto_id_produto FOREIGN KEY (id_produto) REFERENCES produto(id_produto);
+ALTER TABLE nota_fiscal ADD CONSTRAINT nota_fiscal_id_transportadora_transportadora_id_transportadora FOREIGN KEY (id_transportadora) REFERENCES transportadora(id_transportadora);
+ALTER TABLE nota_fiscal ADD CONSTRAINT nota_fiscal_id_funcionario_funcionario_id_funcionario FOREIGN KEY (id_funcionario) REFERENCES funcionario(id_funcionario);
+ALTER TABLE funcionario ADD CONSTRAINT funcionario_id_cargo_cargo_id_cargo FOREIGN KEY (id_cargo) REFERENCES cargo(id_cargo);
