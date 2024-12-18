@@ -1,0 +1,58 @@
+--Database Escola
+CREATE DATABASE escola;
+
+USE escola;
+
+CREATE TABLE turma_aluno (
+matricula_aluno INT NOT NULL,
+semestre INT(1) NOT NULL,
+ano INT(4) NOT NULL,
+cod_disciplina INT(3) NOT NULL);
+
+CREATE TABLE turma (
+ano INT(4) NOT NULL,
+semestre INT(1) NOT NULL,
+cod_disciplina INT(3) NOT NULL,
+matricula_professor INT(3) NOT NULL);
+
+CREATE TABLE disciplina (
+cod_disciplina INT(3) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+nome_disciplina CHAR(30) NOT NULL);
+
+CREATE TABLE professor (
+matricula_professor INT(3) PRIMARY KEY NOT NULL,
+nome_professor VARCHAR(255) NOT NULL,
+titulacao VARCHAR(50) NOT NULL,
+telefone VARCHAR(15) NOT NULL,
+cidade VARCHAR(30) NOT NULL);
+
+CREATE TABLE aluno (
+matricula_aluno INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+nome_aluno VARCHAR(255) NOT NULL,
+endereco VARCHAR(100) NOT NULL,
+telefone VARCHAR(15) NOT NULL,
+cidade CHAR(30) NOT NULL);
+
+CREATE TABLE nota (
+ano INT(4) NOT NULL,
+semestre INT(1) NOT NULL,
+cod_disciplina INT(3) NOT NULL,
+cod_avaliacao INT NOT NULL,
+matricula_aluno INT(3) NOT NULL,
+nota INT(5) NOT NULL);
+
+CREATE TABLE avaliacao (
+ano INT(4) NOT NULL,
+semestre INT(1) NOT NULL,
+cod_disciplina INT(3) NOT NULL,
+cod_avaliacao INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+peso INT(2) NOT NULL);
+
+ALTER TABLE turma_aluno ADD CONSTRAINT turma_aluno_matricula_aluno_aluno_matricula_aluno FOREIGN KEY (matricula_aluno) REFERENCES aluno(matricula_aluno);
+ALTER TABLE turma_aluno ADD CONSTRAINT turma_aluno_cod_disciplina_disciplina_cod_disciplina FOREIGN KEY (cod_disciplina) REFERENCES disciplina(cod_disciplina);
+ALTER TABLE turma ADD CONSTRAINT turma_cod_disciplina_disciplina_cod_disciplina FOREIGN KEY (cod_disciplina) REFERENCES disciplina(cod_disciplina);
+ALTER TABLE turma ADD CONSTRAINT turma_matricula_professor_professor_matricula_professor FOREIGN KEY (matricula_professor) REFERENCES professor(matricula_professor);
+ALTER TABLE nota ADD CONSTRAINT nota_cod_disciplina_disciplina_cod_disciplina FOREIGN KEY (cod_disciplina) REFERENCES disciplina(cod_disciplina);
+ALTER TABLE nota ADD CONSTRAINT nota_cod_avaliacao_avaliacao_cod_avaliacao FOREIGN KEY (cod_avaliacao) REFERENCES avaliacao(cod_avaliacao);
+ALTER TABLE nota ADD CONSTRAINT nota_matricula_aluno_aluno_matricula_aluno FOREIGN KEY (matricula_aluno) REFERENCES aluno(matricula_aluno);
+ALTER TABLE avaliacao ADD CONSTRAINT avaliacao_cod_disciplina_disciplina_cod_disciplina FOREIGN KEY (cod_disciplina) REFERENCES disciplina(cod_disciplina);
